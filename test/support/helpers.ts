@@ -3,6 +3,9 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 
 import { afterEach } from "vitest";
+import { z } from "zod";
+
+import { type AgentDefinition, defineAgentTool } from "../../src/agent/definition.js";
 
 const created: string[] = [];
 
@@ -24,4 +27,24 @@ export async function writeFiles(files: Record<string, string>): Promise<string>
     await writeFile(absolute, content);
   }
   return root;
+}
+
+export function weatherAgent(overrides: Partial<AgentDefinition> = {}): AgentDefinition {
+  return {
+    name: "weather",
+    model: "test-model",
+    system: "You answer weather questions.",
+    createTools: () => [
+      defineAgentTool({
+        name: "get_forecast",
+        description: "Forecast for a city",
+        input: z.object({ city: z.string() }),
+        run: ({ city }) => {
+          if (city === "Atlantis") throw new Error("City not found");
+          return { city, forecast: "sunny", high: 24 };
+        },
+      }),
+    ],
+    ...overrides,
+  };
 }
