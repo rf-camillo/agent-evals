@@ -42,6 +42,16 @@ export type {
   ToolSpec,
   Usage,
 } from "./providers/types.js";
+export {
+  compareRuns,
+  type Comparison,
+  DEFAULT_MAX_DROP,
+  type ScenarioChange,
+} from "./report/compare.js";
+export { renderComparison } from "./report/compare-markdown.js";
+export { renderMarkdown } from "./report/markdown.js";
+export { loadRun, saveRun } from "./report/run-file.js";
+export { renderTerminal } from "./report/terminal.js";
 export { runAttempt } from "./runner/run-attempt.js";
 export { type ProgressListener, runEvals } from "./runner/run-evals.js";
 export type {
