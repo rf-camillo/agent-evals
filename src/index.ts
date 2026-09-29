@@ -42,5 +42,17 @@ export type {
   ToolSpec,
   Usage,
 } from "./providers/types.js";
+export { runAttempt } from "./runner/run-attempt.js";
+export { type ProgressListener, runEvals } from "./runner/run-evals.js";
+export type {
+  AttemptResult,
+  AttemptStatus,
+  ModelPrice,
+  RunConfig,
+  RunResult,
+  RunSummary,
+  ScenarioResult,
+  ScenarioStatus,
+} from "./runner/types.js";
 export { type LoadedScenario, loadScenarios, parseScenarios } from "./scenarios/load.js";
 export type { ArgMatcher, Scenario, ToolExpectation } from "./scenarios/schema.js";
