@@ -1,12 +1,12 @@
 function escapeCell(text: string): string {
-  return text.replace(/\|/g, "\\|").replace(/\n/g, " ");
+  return text.replace(/\\/g, "\\\\").replace(/\|/g, "\\|").replace(/\r?\n/g, " ");
 }
 
 function row(cells: readonly string[]): string {
   return `| ${cells.map(escapeCell).join(" | ")} |`;
 }
 
-/** A GitHub-flavored Markdown table; pipes and line breaks in cells are escaped. */
+/** A GitHub-flavored Markdown table; backslashes, pipes and line breaks in cells are escaped. */
 export function markdownTable(
   headers: readonly string[],
   rows: readonly (readonly string[])[],

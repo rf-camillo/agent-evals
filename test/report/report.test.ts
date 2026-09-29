@@ -38,8 +38,12 @@ describe("format", () => {
 });
 
 describe("markdownTable", () => {
+  it("keeps a trailing backslash from escaping the cell separator", () => {
+    expect(markdownTable(["Path"], [["C:\\runs\\"]])).toBe("| Path |\n| --- |\n| C:\\\\runs\\\\ |");
+  });
+
   it("builds a table and escapes pipes and line breaks", () => {
-    expect(markdownTable(["", "Name"], [["✅", "a | b\nc"]])).toBe(
+    expect(markdownTable(["", "Name"], [["✅", "a | b\r\nc"]])).toBe(
       "|  | Name |\n| --- | --- |\n| ✅ | a \\| b c |",
     );
   });
