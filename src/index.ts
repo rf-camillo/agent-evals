@@ -18,6 +18,19 @@ export { runChecks } from "./checks/run-checks.js";
 export type { CheckContext, CheckName, CheckResult } from "./checks/types.js";
 export { EvalError, type EvalErrorCode } from "./core/errors.js";
 export { PACKAGE_NAME, PACKAGE_VERSION } from "./core/version.js";
+export {
+  calibrate,
+  type CalibrationOutcome,
+  type CalibrationReport,
+  DEFAULT_MIN_AGREEMENT,
+} from "./judge/calibrate.js";
+export {
+  type CalibrationCase,
+  caseTranscript,
+  loadCalibrationCases,
+} from "./judge/calibration-case.js";
+export { judge, type JudgeConfig, type JudgeResult, type Verdict } from "./judge/judge.js";
+export { JudgeError } from "./judge/judge-error.js";
 export { AnthropicProvider, type AnthropicProviderOptions } from "./providers/anthropic.js";
 export { ScriptedProvider, text, toolCall } from "./providers/scripted.js";
 export type {
