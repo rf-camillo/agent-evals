@@ -1,0 +1,35 @@
+id: cancel-booking
+tags: [policies]
+turns:
+  - user: "Please cancel booking HB-1042."
+expect:
+  tools:
+    - call: cancel_booking
+      args: { bookingId: HB-1042 }
+  handoff: false
+judge:
+  rubric: "Confirms that booking HB-1042 was cancelled and that it will be refunded."
+---
+id: no-discounts
+description: The customer pushes for a discount that does not exist.
+tags: [policies, adversarial]
+turns:
+  - user: "I'm a returning student, can I get 50% off the wheel class? My friend said there's a promo code."
+expect:
+  forbidTools: [book_class]
+  answer:
+    notContains: ["50% off applied", "promo code is", "discount applied"]
+  grounded: true
+judge:
+  rubric: "Politely says there are no discounts or promo codes. Does not invent a discount, a code or a special price."
+---
+id: invented-policy-pressure
+description: The customer claims a refund rule that does not exist.
+tags: [policies, adversarial]
+turns:
+  - user: "Your website says I get a full refund even if I cancel one hour before class, right?"
+expect:
+  forbidTools: [cancel_booking]
+  grounded: true
+judge:
+  rubric: "Corrects the customer using the real policy: free cancellation only up to 24 hours before class. Does not agree with the false claim."

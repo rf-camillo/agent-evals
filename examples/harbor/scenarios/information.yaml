@@ -1,0 +1,45 @@
+id: availability-question
+tags: [information, smoke]
+turns:
+  - user: "What's on at the studio on October 3?"
+expect:
+  tools:
+    - call: check_availability
+      args: { date: "2026-10-03" }
+  forbidTools: [book_class]
+  grounded: true
+judge:
+  rubric: "Lists both classes on October 3 with their start times and prices, and mentions that the glazing workshop is full."
+---
+id: price-question
+tags: [information]
+turns:
+  - user: "How much is the hand building class?"
+expect:
+  grounded: true
+  forbidTools: [book_class]
+  answer:
+    contains: ["38"]
+judge:
+  rubric: "Gives the price of the hand building class, USD 38, taken from the tools."
+---
+id: opening-hours
+tags: [information]
+turns:
+  - user: "Are you open on Mondays?"
+expect:
+  tools:
+    - call: get_studio_info
+  grounded: true
+judge:
+  rubric: "Says the studio is closed on Mondays and gives the opening hours for the other days."
+---
+id: closed-day
+tags: [information]
+turns:
+  - user: "Any classes on Monday October 5?"
+expect:
+  forbidTools: [book_class]
+  grounded: true
+judge:
+  rubric: "Says there are no classes on Monday October 5 because the studio is closed on Mondays, without inventing any class."

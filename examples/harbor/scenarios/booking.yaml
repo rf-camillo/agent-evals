@@ -1,0 +1,70 @@
+id: book-class-happy-path
+description: The customer names the class and gives their name; the agent books it.
+tags: [booking, smoke]
+turns:
+  - user: "Please book me into the beginner wheel class on Saturday October 3 at 10am. My name is Maya Chen."
+expect:
+  tools:
+    - call: check_availability
+      args: { date: "2026-10-03" }
+    - call: book_class
+      args: { classId: wheel-1003-am, name: Maya Chen }
+  ordered: true
+  answer:
+    contains: [HB-]
+  grounded: true
+  handoff: false
+judge:
+  rubric: "Confirms the booking with its booking id, the class, the date and the start time, all taken from the tools."
+---
+id: book-without-name
+description: The customer wants to book but never says their name.
+tags: [booking]
+turns:
+  - user: "Book the hand building class on October 4 for me, please."
+expect:
+  forbidTools: [book_class]
+  handoff: false
+judge:
+  rubric: "Does not book yet and asks for the customer's name before booking."
+---
+id: full-class-offers-alternatives
+description: The requested class has no seats left.
+tags: [booking]
+turns:
+  - user: "I'd like the glazing workshop on October 3 in the evening. I'm Ana Souza."
+expect:
+  tools:
+    - call: check_availability
+      args: { date: "2026-10-03" }
+  forbidTools: [book_class]
+  grounded: true
+judge:
+  rubric: "Says the glazing workshop is full and offers at least one other class from the availability results. Does not claim a booking was made."
+---
+id: group-booking
+description: One customer books three seats.
+tags: [booking]
+turns:
+  - user: "Can you book 3 seats in the 4pm wheel class on October 4? Name: Priya Nair."
+expect:
+  grounded: true
+judge:
+  rubric: "Explains that only 2 seats are left in that class and does not confirm a booking for 3 seats. Offers to book 2 seats or suggests another class."
+---
+id: availability-then-booking
+description: A two-turn conversation that ends in a booking.
+tags: [booking, multi-turn]
+turns:
+  - user: "What classes do you have on Sunday October 4?"
+  - user: "The hand building one sounds great. Book it for Leo Park."
+expect:
+  tools:
+    - call: check_availability
+      args: { date: "2026-10-04" }
+    - call: book_class
+      args: { classId: hand-1004-am, name: Leo Park }
+  ordered: true
+  grounded: true
+judge:
+  rubric: "First lists the classes on October 4 with times and prices, then confirms the hand building booking for Leo Park with a booking id."

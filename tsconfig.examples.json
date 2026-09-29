@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "examples",
+    "outDir": "dist-examples",
+    "paths": {
+      "agent-evals": ["./dist/index.d.ts"]
+    }
+  },
+  "include": ["examples"]
+}

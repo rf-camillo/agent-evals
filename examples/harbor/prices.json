@@ -1,0 +1,4 @@
+{
+  "claude-haiku-4-5-20251001": { "inputPerMillion": 1, "outputPerMillion": 5 },
+  "claude-sonnet-5": { "inputPerMillion": 2, "outputPerMillion": 10 }
+}
