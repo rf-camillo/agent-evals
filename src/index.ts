@@ -14,6 +14,8 @@ export type {
   TurnRecord,
 } from "./agent/transcript.js";
 export { TranscriptRecorder } from "./agent/transcript-recorder.js";
+export { runChecks } from "./checks/run-checks.js";
+export type { CheckContext, CheckName, CheckResult } from "./checks/types.js";
 export { EvalError, type EvalErrorCode } from "./core/errors.js";
 export { PACKAGE_NAME, PACKAGE_VERSION } from "./core/version.js";
 export { AnthropicProvider, type AnthropicProviderOptions } from "./providers/anthropic.js";
