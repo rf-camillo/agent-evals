@@ -1,0 +1,7 @@
+coverage
+dist
+dist-examples
+.DS_Store
+*.log
+node_modules
+runs

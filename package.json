@@ -1,0 +1,78 @@
+{
+  "name": "agent-evals",
+  "version": "0.1.0",
+  "description": "Evaluate tool-using AI agents with scenarios, deterministic checks and a calibrated LLM judge",
+  "keywords": [
+    "ai-agents",
+    "evals",
+    "llm",
+    "llm-as-a-judge",
+    "tool-use",
+    "anthropic",
+    "claude",
+    "testing"
+  ],
+  "homepage": "https://github.com/rf-camillo/agent-evals#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rf-camillo/agent-evals.git"
+  },
+  "license": "MIT",
+  "author": "Rafael Camillo",
+  "type": "module",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "agent-evals": "dist/bin/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
+    "deps": "depcruise src",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run deps && npm run coverage",
+    "prepack": "npm run build",
+    "build:examples": "npm run build && tsc -p tsconfig.examples.json",
+    "example": "npm run build:examples && node dist/bin/cli.js run examples/harbor/scenarios --judge-model claude-sonnet-5 --repeat 5 --prices examples/harbor/prices.json --agent dist-examples/harbor/agent.js --out runs/agent.json --markdown runs/agent.md",
+    "example:calibrate": "npm run build && node dist/bin/cli.js calibrate examples/harbor/calibration --judge-model claude-sonnet-5",
+    "example:compare": "node dist/bin/cli.js compare runs/baseline.json runs/agent.json --markdown runs/comparison.md",
+    "example:baseline": "npm run build:examples && node dist/bin/cli.js run examples/harbor/scenarios --judge-model claude-sonnet-5 --repeat 5 --prices examples/harbor/prices.json --agent dist-examples/harbor/baseline.js --out runs/baseline.json --markdown runs/baseline.md"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.129.0",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.20.4",
+    "@vitest/coverage-v8": "^4.1.11",
+    "dependency-cruiser": "^17.4.3",
+    "eslint": "^10.11.0",
+    "eslint-plugin-simple-import-sort": "^14.0.0",
+    "prettier": "^3.9.9",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.71.0",
+    "vitest": "^4.1.11"
+  }
+}
